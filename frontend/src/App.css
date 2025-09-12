@@ -1,0 +1,51 @@
+.app-container {
+  text-align: center;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+  min-height: 100vh;
+  padding: 2rem;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+/* Dropdown container */
+.group-dropdown {
+  margin-bottom: 20px;
+}
+
+/* Style the select element */
+.group-dropdown select {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  background-color: #ffffff;
+  color: #2c3e50;
+  outline: none;
+  cursor: pointer;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* Hover effect */
+.group-dropdown select:hover {
+  border-color: #2980b9;
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.3);
+}
+
+/* Focus effect */
+.group-dropdown select:focus {
+  border-color: #2980b9;
+  box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+}
+
+/* Optional: add a subtle arrow styling */
+.group-dropdown select::-ms-expand {
+  display: none; /* remove default arrow in IE/Edge */
+}

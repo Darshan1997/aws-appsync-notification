@@ -1,0 +1,78 @@
+enum NotificationStatus {
+  NEW
+  SENT
+  DELIVERED
+  ARCHIVED
+}
+
+enum NotificationTopic {
+  ENGINE_DIAGNOSTICS_ALERT
+  BRAKE_SYSTEM_CHECK_REQUIRED
+  BATTERY_HEALTH_UPDATE
+  OIL_CHANGE_REMINDER
+  TIRE_PRESSURE_ALERT
+  NEW_MODEL_LAUNCH
+  SERVICE_APPOINTMENT_REMINDER
+  EXTENDED_WARRANTY_NOTIFICATION
+  INSURANCE_RENEWAL_ALERT
+  CUSTOMER_FEEDBACK_REQUEST
+  PRODUCTION_LINE_UPDATE
+  PARTS_SUPPLY_DELAY
+  QUALITY_INSPECTION_REPORT
+  SHIPMENT_TRACKING_UPDATE
+  RECALL_NOTICE
+}
+
+enum NotificationGroup {
+  SALES
+  MARKETING
+  SERVICE
+  MANUFACTURING
+  MANAGEMENT
+}
+
+type Notification {
+  notificationId: ID!
+  userId: ID!
+  email: String!
+  channel: String!
+  groupName: NotificationGroup!
+  topicName: NotificationTopic!
+  message: String!
+  readStatus: Boolean
+  priority: String
+  status: NotificationStatus
+  deepLinkUrl: String
+  createdAt: AWSDateTime!
+  createdBy: String
+  viewedAtDateTime: AWSDateTime
+  viewedBy: String
+}
+
+input NotificationInput {
+  userId: ID!
+  email: String!,
+  channel: String!
+  groupName: NotificationGroup!
+  topicName: NotificationTopic!
+  message: String!
+  readStatus: Boolean #keeping this in input so we can inject the status via script
+  priority: String
+  status: NotificationStatus
+  deepLinkUrl: String
+  createdBy: String
+  viewedBy: String
+}
+
+type Query {
+  getNotifications(groupName: String!): [Notification!]!
+}
+
+type Mutation {
+  sendNotifications(input: NotificationInput!): Notification!
+}
+
+type Subscription {
+  onNewNotification(groupName: String!): Notification
+    @aws_subscribe(mutations: ["sendNotifications"])
+}
