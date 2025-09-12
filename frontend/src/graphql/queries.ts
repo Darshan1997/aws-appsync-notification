@@ -1,7 +1,7 @@
 import { gql } from "graphql-request";
 
 export const GET_NOTIFICATIONS = gql`
-  query GetNotifications($groupName: String!) {
+  query GetNotifications($groupName: NotificationGroup!) {
     getNotifications(groupName: $groupName) {
       notificationId
       userId
@@ -21,3 +21,24 @@ export const GET_NOTIFICATIONS = gql`
   }
 `;
 
+export const NOTIFICATION_SUBSCRIPTION = `
+  subscription  {
+    onNewNotification {
+      notificationId
+      userId
+      email
+      channel
+      groupName
+      topicName
+      message
+      readStatus
+      priority
+      status
+      deepLinkUrl
+      createdAt
+      createdBy
+      viewedAtDateTime
+      viewedBy
+    }
+  }
+`;

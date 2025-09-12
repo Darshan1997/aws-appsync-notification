@@ -65,7 +65,7 @@ input NotificationInput {
 }
 
 type Query {
-  getNotifications(groupName: String!): [Notification!]!
+  getNotifications(groupName: NotificationGroup!): [Notification!]!
 }
 
 type Mutation {
@@ -73,6 +73,6 @@ type Mutation {
 }
 
 type Subscription {
-  onNewNotification(groupName: String!): Notification
+  onNewNotification: Notification
     @aws_subscribe(mutations: ["sendNotifications"])
 }
