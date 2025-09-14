@@ -1,6 +1,6 @@
 import { util } from '@aws-appsync/utils';
-import { AppSyncContext } from '../types/appSyncTypes';
-import { Notification } from '../types/notification';
+import { Notification } from '../../types/notification';
+import { AppSyncContext } from '../../types/appSyncTypes';
 
 export function request(ctx: AppSyncContext<{ groupName: string }>) {
   return {

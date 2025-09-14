@@ -22,8 +22,8 @@ export const GET_NOTIFICATIONS = gql`
 `;
 
 export const NOTIFICATION_SUBSCRIPTION = `
-  subscription  {
-    onNewNotification {
+  subscription onNewNotificationByGroup($groupName: NotificationGroup!) {
+    onNewNotificationByGroup(groupName: $groupName) {
       notificationId
       userId
       email

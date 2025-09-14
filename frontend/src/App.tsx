@@ -9,11 +9,24 @@ export const NotificationGroup = {
   MANAGEMENT: "MANAGEMENT",
 } as const;
 
+const groups = [
+  NotificationGroup.SALES,
+  NotificationGroup.MARKETING,
+  NotificationGroup.SERVICE
+];
+
 function App() {
   return (
-    <div className="app-container">
-       <NotificationSubscriber />
-    </div>
+      <div className="notification-board">
+        {groups.map((group) => (
+          <div key={group} className="notification-column">
+            <h2>{group}</h2>
+            <div className="notification-list">
+              <NotificationSubscriber groupName={group} />
+            </div>
+          </div>
+        ))}
+      </div>
   );
 }
 

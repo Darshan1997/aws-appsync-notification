@@ -1,33 +1,21 @@
-terraform {
-  required_providers {
-    aws = {
-      source  = "hashicorp/aws"
-      version = "6.0.0"
-    }
-  }
-}
-
-provider "aws" {
-  region     = "us-east-1"
-}
-
+# DynamoDB Table
 resource "aws_dynamodb_table" "notifications" {
-  name         = "notifications"
+  name         = var.table_name
   billing_mode = "PROVISIONED"
-  hash_key     = "notificationId"
+  hash_key     = local.dynamodb_partition_key
 
   attribute {
-    name = "notificationId"
+    name = local.dynamodb_partition_key
     type = "S"
   }
 
-  read_capacity  = 5
-  write_capacity = 5
+  read_capacity  = var.read_capacity
+  write_capacity = var.write_capacity
 }
 
 # AppSync API
 resource "aws_appsync_graphql_api" "notifications_api" {
-  name                = "poc-notifications-api"
+  name                = var.appsync_api_name
   authentication_type = "API_KEY"
   schema              = file("${path.module}/schema.graphql")
 }
@@ -37,9 +25,9 @@ resource "aws_appsync_api_key" "api_key" {
   api_id = aws_appsync_graphql_api.notifications_api.id
 }
 
-# IAM Role for DynamoDB access
+# IAM Role for AppSync
 resource "aws_iam_role" "appsync_role" {
-  name = "appsync-dynamodb-role"
+  name = local.appsync_role_name
 
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -51,14 +39,15 @@ resource "aws_iam_role" "appsync_role" {
   })
 }
 
+# IAM Policy for DynamoDB
 resource "aws_iam_role_policy" "appsync_policy" {
   role = aws_iam_role.appsync_role.id
 
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [{
-      Effect = "Allow"
-      Action = ["dynamodb:*"]
+      Effect   = "Allow"
+      Action   = ["dynamodb:*"]
       Resource = [
         aws_dynamodb_table.notifications.arn,
         "${aws_dynamodb_table.notifications.arn}/index/*"
@@ -67,6 +56,7 @@ resource "aws_iam_role_policy" "appsync_policy" {
   })
 }
 
+# DynamoDB Datasource
 resource "aws_appsync_datasource" "notifications_ds" {
   api_id           = aws_appsync_graphql_api.notifications_api.id
   name             = "NotificationsDS"
@@ -78,12 +68,14 @@ resource "aws_appsync_datasource" "notifications_ds" {
   }
 }
 
+# None Datasource
 resource "aws_appsync_datasource" "none" {
   api_id = aws_appsync_graphql_api.notifications_api.id
   name   = "none"
   type   = "NONE"
 }
 
+# Resolvers
 resource "aws_appsync_resolver" "send_notifications" {
   api_id      = aws_appsync_graphql_api.notifications_api.id
   type        = "Mutation"
@@ -95,7 +87,7 @@ resource "aws_appsync_resolver" "send_notifications" {
     runtime_version = "1.0.0"
   }
 
-  code = file("${path.module}/../dist/resolvers/sendNotifications.js")
+  code = file("${path.module}/../../../dist/resolvers/mutations/mutation.sendNotifications.js")
 }
 
 resource "aws_appsync_resolver" "get_notifications" {
@@ -109,5 +101,5 @@ resource "aws_appsync_resolver" "get_notifications" {
     runtime_version = "1.0.0"
   }
 
-  code = file("${path.module}/../dist/resolvers/getNotifications.js")
+  code = file("${path.module}/../../../dist/resolvers/query/query.getNotifications.js")
 }

@@ -49,3 +49,61 @@ h1 {
 .group-dropdown select::-ms-expand {
   display: none; /* remove default arrow in IE/Edge */
 }
+
+
+/* Notification board layout */
+.notification-board {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+  padding: 16px;
+}
+
+/* Each group column */
+.notification-column {
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  min-height: 80vh;
+  overflow: hidden;
+  text-align: center;
+}
+
+/* Group title */
+.notification-column h2 {
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin: 0;
+  padding: 8px;
+  background: #eee;
+  border-bottom: 1px solid #ccc;
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+/* Notifications container (scrollable area) */
+.notification-list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px;
+}
+
+/* Each notification item */
+.notification-item {
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  font-size: 0.9rem;
+  line-height: 1.4;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+}
+
+.notification-item:last-child {
+  margin-bottom: 0;
+}

@@ -73,6 +73,7 @@ type Mutation {
 }
 
 type Subscription {
-  onNewNotification: Notification
+  onNewNotificationByGroup(groupName: NotificationGroup!): Notification
     @aws_subscribe(mutations: ["sendNotifications"])
 }
+
