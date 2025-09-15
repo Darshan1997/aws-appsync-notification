@@ -1,7 +1,6 @@
 import type { NotificationChannel, NotificationGroup, NotificationPriority, NotificationStatus, NotificationTopic } from "../types/notifications";
 
 export const NOTIFICATION_PRIORITY: NotificationPriority[] = [
-  "CRITICAL",
   "HIGH",
   "MEDIUM",
   "LOW"

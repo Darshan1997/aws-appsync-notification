@@ -14,7 +14,7 @@ const SendNotificationForm: React.FC = () => {
         topicName: "ENGINE_DIAGNOSTICS_ALERT",
         message: "",
         readStatus: true,
-        priority: "",
+        priority: "HIGH",
         status: "NEW",
         deepLinkUrl: "",
         viewedBy: "",
@@ -46,7 +46,7 @@ const SendNotificationForm: React.FC = () => {
             <form onSubmit={handleSubmit}>
                 <input name="userId" placeholder="User ID" value={formData.userId} onChange={handleChange} required />
                 
-                <input name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
                 
                 <select name="channel" value={formData.channel} onChange={handleChange} required>
                     {NOTIFICATION_CHANNELS.map((channel) => (

@@ -17,7 +17,7 @@ export interface Notification {
 
 export type NotificationStatus = "NEW" | "SENT" | "DELIVERED" | "ARCHIVED";
 
-export type NotificationPriority = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW";
+export type NotificationPriority = "HIGH" | "MEDIUM" | "LOW";
 
 export type NotificationChannel = "INAPP" | "PUSH";
 
