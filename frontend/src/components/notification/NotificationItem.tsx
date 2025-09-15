@@ -14,7 +14,7 @@ function NotificationItem({ notification }: Props) {
     <div className={`notification-item ${priorityClass}`}>
       {!notification.readStatus && <div className="unread-dot" />}
       <div className="notification-content">
-        <h4 className="topic">{notification.topicName}</h4>
+        <h4 className="topic">{notification.topicName.replace(/_/g, " ")}</h4>
         <p className="message">{notification.message}</p>
         <span className="timestamp">
           {new Date(notification.createdAt).toLocaleString()}
