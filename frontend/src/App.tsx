@@ -1,32 +1,17 @@
 import "./App.css";
-import NotificationSubscriber from "./components/NotificationSub";
-
-export const NotificationGroup = {
-  SALES: "SALES",
-  MARKETING: "MARKETING",
-  SERVICE: "SERVICE",
-  MANUFACTURING: "MANUFACTURING",
-  MANAGEMENT: "MANAGEMENT",
-} as const;
-
-const groups = [
-  NotificationGroup.SALES,
-  NotificationGroup.MARKETING,
-  NotificationGroup.SERVICE
-];
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Notification } from "./components/notification/Notification";
+import SendNotificationForm from "./components/notification/SendNotificationForm";
 
 function App() {
   return (
-      <div className="notification-board">
-        {groups.map((group) => (
-          <div key={group} className="notification-column">
-            <h2>{group}</h2>
-            <div className="notification-list">
-              <NotificationSubscriber groupName={group} />
-            </div>
-          </div>
-        ))}
-      </div>
+    <Router>
+      <Routes>
+        <Route path="/send" element={<SendNotificationForm />} />
+        <Route path="/" element={<Notification />} />
+      </Routes>
+    </Router>
+
   );
 }
 

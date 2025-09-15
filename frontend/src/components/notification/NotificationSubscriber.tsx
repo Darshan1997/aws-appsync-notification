@@ -1,12 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { NOTIFICATION_SUBSCRIPTION } from "../graphql/queries";
 import NotificationItem from "./NotificationItem";
-import { APPSYNC_API_KEY, APPSYNC_HOST } from "../utils/envs";
-import { getWebsocketUrl } from "../utils/getWebsocketUrl";
+import { APPSYNC_API_KEY, APPSYNC_HOST } from "../../commonHelper/envs";
+import { getWebsocketUrl } from "../../commonHelper/getWebsocketUrl";
+import { NOTIFICATION_SUBSCRIPTION } from "../../graphql/subscription/subscription.onNewNotificationByGroup";
 
 function startSubscription(websocket: WebSocket, payload: { groupName: string; }) {
-    console.log("payload:", payload);
-
     const subscribeMessage = {
         id: crypto.randomUUID(),
         type: "start",

@@ -51,7 +51,7 @@ type Notification {
 
 input NotificationInput {
   userId: ID!
-  email: String!,
+  email: String!
   channel: String!
   groupName: NotificationGroup!
   topicName: NotificationTopic!

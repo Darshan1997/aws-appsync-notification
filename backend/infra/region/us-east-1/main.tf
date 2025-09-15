@@ -17,7 +17,7 @@ resource "aws_dynamodb_table" "notifications" {
 resource "aws_appsync_graphql_api" "notifications_api" {
   name                = var.appsync_api_name
   authentication_type = "API_KEY"
-  schema              = file("${path.module}/schema.graphql")
+  schema              = file("${path.module}/../../../dist/schema/schema.graphql")
 }
 
 # API Key
