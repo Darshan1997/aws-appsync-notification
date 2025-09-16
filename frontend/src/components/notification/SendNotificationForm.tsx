@@ -4,8 +4,11 @@ import { NOTIFICATION_CHANNELS, NOTIFICATION_GROUPS, NOTIFICATION_PRIORITY, NOTI
 import { client } from "../../graphql/common/client";
 import './SendNotificationForm.css';
 import { SEND_NOTIFICATION } from "../../graphql/mutation/mutation.sendNotification";
+import { useToast } from "../common/Toast";
 
 const SendNotificationForm: React.FC = () => {
+    const { showToast } = useToast();
+    const [sending, setSending] = useState(false);
     const [formData, setFormData] = useState<NotificationInput>({
         userId: "",
         email: "",
@@ -33,8 +36,11 @@ const SendNotificationForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
+            setSending(true);
             const response = await client.request(SEND_NOTIFICATION, { input: formData });
             console.log("Notification sent:", response);
+            setSending(false);
+            showToast("Notification Sent Successfully", "success");
         } catch (error) {
             console.error("Error sending notification:", error);
         }
@@ -45,9 +51,9 @@ const SendNotificationForm: React.FC = () => {
             <h2>Send Notification</h2>
             <form onSubmit={handleSubmit}>
                 <input name="userId" placeholder="User ID" value={formData.userId} onChange={handleChange} required />
-                
+
                 <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
-                
+
                 <select name="channel" value={formData.channel} onChange={handleChange} required>
                     {NOTIFICATION_CHANNELS.map((channel) => (
                         <option key={channel} value={channel}>{channel}</option>
@@ -83,7 +89,18 @@ const SendNotificationForm: React.FC = () => {
                 <input name="deepLinkUrl" placeholder="Deep Link URL" value={formData.deepLinkUrl} onChange={handleChange} />
                 {/* <input name="createdBy" placeholder="Created By" value={formData.createdBy} onChange={handleChange} /> */}
 
-                <button type="submit">Send Notification</button>
+                <button
+                    type="submit"
+                    disabled={sending}
+                    style={{
+                        padding: "10px 20px",
+                        borderRadius: "6px",
+                        border: "none",
+                        cursor: sending ? "not-allowed" : "pointer",
+                        backgroundColor: sending ? "#aaa" : "#4caf50",
+                        color: "white",
+                    }}
+                >{sending ? 'sending' : 'Send Notification'}</button>
             </form>
         </div>
     );

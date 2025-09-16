@@ -3,6 +3,7 @@ import NotificationItem from "./NotificationItem";
 import { APPSYNC_API_KEY, APPSYNC_HOST } from "../../commonHelper/envs";
 import { getWebsocketUrl } from "../../commonHelper/getWebsocketUrl";
 import { NOTIFICATION_SUBSCRIPTION } from "../../graphql/subscription/subscription.onNewNotificationByGroup";
+import { useToast } from "../common/Toast";
 
 function startSubscription(websocket: WebSocket, payload: { groupName: string; }) {
     const subscribeMessage = {
@@ -21,7 +22,6 @@ function startSubscription(websocket: WebSocket, payload: { groupName: string; }
             },
         },
     };
-    console.log(websocket.readyState);
 
     if (websocket.readyState === WebSocket.OPEN) {
         websocket.send(JSON.stringify(subscribeMessage));
@@ -36,6 +36,7 @@ function startSubscription(websocket: WebSocket, payload: { groupName: string; }
 
 const NotificationSubscriber: React.FC<{ groupName: string }> = ({ groupName }) => {
     const [messages, setMessages] = useState([]);
+    const { showToast } = useToast();
 
     useEffect(() => {
         const url = getWebsocketUrl();
@@ -59,6 +60,7 @@ const NotificationSubscriber: React.FC<{ groupName: string }> = ({ groupName }) 
                     const notificationData =
                         message.payload?.data?.onNewNotificationByGroup;
                     if (notificationData) {
+                        showToast(`New Notification for ${notificationData.groupName}`, "success");
                         setMessages((prev) => [].concat(prev).concat(notificationData));
                     }
 
