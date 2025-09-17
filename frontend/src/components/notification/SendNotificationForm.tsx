@@ -49,59 +49,81 @@ const SendNotificationForm: React.FC = () => {
     return (
         <div className="form-container">
             <h2>Notification Publisher</h2>
-            <form onSubmit={handleSubmit}>
-                <input name="userId" placeholder="User ID" value={formData.userId} onChange={handleChange} required />
+            <form onSubmit={handleSubmit} className="notification-form">
+                <div className="form-group">
+                    <label htmlFor="userId">User ID</label>
+                    <input id="userId" name="userId" value={formData.userId} onChange={handleChange} required />
+                </div>
 
-                <input type="email" name="email" placeholder="Email" value={formData.email} onChange={handleChange} required />
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input type="email" id="email" name="email" value={formData.email} onChange={handleChange} required />
+                </div>
 
-                <select name="channel" value={formData.channel} onChange={handleChange} required>
-                    {NOTIFICATION_CHANNELS.map((channel) => (
-                        <option key={channel} value={channel}>{channel}</option>
-                    ))}
-                </select>
+                <div className="form-group">
+                    <label htmlFor="channel">Channel</label>
+                    <select id="channel" name="channel" value={formData.channel} onChange={handleChange} required>
+                        <option value="">Select Channel</option>
+                        {NOTIFICATION_CHANNELS.map((ch) => (
+                            <option key={ch} value={ch}>{ch}</option>
+                        ))}
+                    </select>
+                </div>
 
-                <select name="groupName" value={formData.groupName} onChange={handleChange}>
-                    {NOTIFICATION_GROUPS.map((group) => (
-                        <option key={group} value={group}>{group}</option>
-                    ))}
-                </select>
+                <div className="form-group">
+                    <label htmlFor="groupName">Group</label>
+                    <select id="groupName" name="groupName" value={formData.groupName} onChange={handleChange}>
+                        {NOTIFICATION_GROUPS.map((group) => (
+                            <option key={group} value={group}>{group}</option>
+                        ))}
+                    </select>
+                </div>
 
-                <select name="topicName" value={formData.topicName} onChange={handleChange}>
-                    {NOTIFICATION_TOPICS.map((topic) => (
-                        <option key={topic} value={topic}>{topic}</option>
-                    ))}
-                </select>
+                <div className="form-group">
+                    <label htmlFor="topicName">Topic</label>
+                    <select id="topicName" name="topicName" value={formData.topicName} onChange={handleChange}>
+                        {NOTIFICATION_TOPICS.map((topic) => (
+                            <option key={topic} value={topic}>{topic}</option>
+                        ))}
+                    </select>
+                </div>
 
-                <textarea name="message" placeholder="Message" value={formData.message} onChange={handleChange} required />
+                <div className="form-group">
+                    <label htmlFor="message">Message</label>
+                    <textarea id="message" name="message" value={formData.message} onChange={handleChange} required />
+                </div>
 
-                <select name="priority" value={formData.priority} onChange={handleChange}>
-                    {NOTIFICATION_PRIORITY.map((priority) => (
-                        <option key={priority} value={priority}>{priority}</option>
-                    ))}
-                </select>
+                <div className="form-group">
+                    <label htmlFor="priority">Priority</label>
+                    <select id="priority" name="priority" value={formData.priority} onChange={handleChange}>
+                        {NOTIFICATION_PRIORITY.map((priority) => (
+                            <option key={priority} value={priority}>{priority}</option>
+                        ))}
+                    </select>
+                </div>
 
-                {/* <select name="status" value={formData.status} onChange={handleChange}>
-                    {NOTIFICATION_STATUSES.map((status) => (
-                        <option key={status} value={status}>{status}</option>
-                    ))}
-                </select> */}
+                {/* <div className="form-group">
+                    <label htmlFor="status">Status</label>
+                    <select id="status" name="status" value={formData.status} onChange={handleChange}>
+                        {NOTIFICATION_STATUSES.map((status) => (
+                            <option key={status} value={status}>{status}</option>
+                        ))}
+                    </select>
+                </div> */}
 
-                <input name="deepLinkUrl" placeholder="Deep Link URL" value={formData.deepLinkUrl} onChange={handleChange} />
-                {/* <input name="createdBy" placeholder="Created By" value={formData.createdBy} onChange={handleChange} /> */}
+                <div className="form-group">
+                    <label htmlFor="deepLinkUrl">Deep Link URL</label>
+                    <input id="deepLinkUrl" name="deepLinkUrl" value={formData.deepLinkUrl} onChange={handleChange} />
+                </div>
 
-                <button
-                    type="submit"
-                    disabled={sending}
-                    style={{
-                        padding: "10px 20px",
-                        borderRadius: "6px",
-                        border: "none",
-                        cursor: sending ? "not-allowed" : "pointer",
-                        backgroundColor: sending ? "#aaa" : "#4caf50",
-                        color: "white",
-                    }}
-                >{sending ? 'sending' : 'Send Notification'}</button>
+                {/* <div className="form-group">
+                    <label htmlFor="viewedBy">Viewed By</label>
+                    <input id="viewedBy" name="viewedBy" value={formData.viewedBy} onChange={handleChange} />
+                </div> */}
+
+                <button type="submit" className="submit-btn" disabled={sending}>{sending ? 'Sending': 'Send Notification'}</button>
             </form>
+
         </div>
     );
 };
