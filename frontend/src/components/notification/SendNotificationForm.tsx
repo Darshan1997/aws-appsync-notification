@@ -48,7 +48,7 @@ const SendNotificationForm: React.FC = () => {
 
     return (
         <div className="form-container">
-            <h2>Send Notification</h2>
+            <h2>Notification Publisher</h2>
             <form onSubmit={handleSubmit}>
                 <input name="userId" placeholder="User ID" value={formData.userId} onChange={handleChange} required />
 

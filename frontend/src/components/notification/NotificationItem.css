@@ -1,5 +1,4 @@
 .notification-item {
-  position: relative;
   padding: 14px 18px;
   border-radius: 8px;
   background: #ffffff;
@@ -8,7 +7,6 @@
   gap: 12px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.40);
   margin-bottom: 1rem;
-  width: 400px;
 }
 
 .notification-item.high {
