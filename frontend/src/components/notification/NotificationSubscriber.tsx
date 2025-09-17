@@ -4,6 +4,8 @@ import { APPSYNC_API_KEY, APPSYNC_HOST } from "../../commonHelper/envs";
 import { getWebsocketUrl } from "../../commonHelper/getWebsocketUrl";
 import { NOTIFICATION_SUBSCRIPTION } from "../../graphql/subscription/subscription.onNewNotificationByGroup";
 import { useToast } from "../common/Toast";
+import { client } from "../../graphql/common/client";
+import { GET_NOTIFICATIONS } from "../../graphql/query/query.getNotifications";
 
 function startSubscription(websocket: WebSocket, payload: { groupName: string; }) {
     const subscribeMessage = {
@@ -80,13 +82,24 @@ const NotificationSubscriber: React.FC<{ groupName: string }> = ({ groupName }) 
         };
     }, []);
 
+    useEffect(() => {
+        async function fetchNotifications() {
+            const res = await client.request<{ getNotifications: Notification[] }>(
+                GET_NOTIFICATIONS,
+                { groupName }
+            );
+        }
+
+        fetchNotifications();
+    })
+
     return (
         <div className="p-4">
-            <h1 className="font-bold text-lg mb-2">Notifications</h1>
+            <h2 className="font-bold text-lg mb-2">Notifications</h2>
             {messages.length === 0 ? (
                 <h4>No notifications yet...</h4>
             ) :
-                <div>
+                <div style={{paddingTop: "10px"}}>
                     {messages.map((msg: any) => (
                         <NotificationItem key={msg.notificationId} notification={msg} />
                     ))}

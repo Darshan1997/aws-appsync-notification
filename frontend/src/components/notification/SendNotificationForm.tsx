@@ -63,7 +63,6 @@ const SendNotificationForm: React.FC = () => {
                 <div className="form-group">
                     <label htmlFor="channel">Channel</label>
                     <select id="channel" name="channel" value={formData.channel} onChange={handleChange} required>
-                        <option value="">Select Channel</option>
                         {NOTIFICATION_CHANNELS.map((ch) => (
                             <option key={ch} value={ch}>{ch}</option>
                         ))}

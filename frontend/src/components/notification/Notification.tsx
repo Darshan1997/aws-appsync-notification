@@ -6,7 +6,7 @@ export const Notification: React.FC = () => {
         <div className="notification-board">
             {NOTIFICATION_GROUPS.map((group) => (
                 <div key={group} className="notification-column">
-                    <h2>{group}</h2>
+                    <h1>{group}</h1>
                     <div className="notification-list">
                         <NotificationSubscriber groupName={group} />
                     </div>
